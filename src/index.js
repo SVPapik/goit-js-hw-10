@@ -1,20 +1,19 @@
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix';
 import './css/styles.css';
-import { fetchCountries } from './js/fetchCountries';
-import { getRefs } from './js/getRefs';
+import { fetchCountries } from './fetchCountries';
+import { getRefs } from './getRefs';
 import {
   clearCountryInfo,
   clearCountryList,
-  markupList,
   markupInfo,
-} from './js/countriesMarkup';
+  markupList,
+} from './countriesMarkup';
 
 const DEBOUNCE_DELAY = 300;
 const refs = getRefs();
 
 refs.input.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY));
-
 function onInputSearch(evt) {
   clearCountryList();
   clearCountryInfo();
@@ -28,16 +27,16 @@ function onInputSearch(evt) {
 }
 
 function onFetchSuccess(data) {
+  if (data.length >= 2 && data.length <= 10) {
+    markupList(data);
+    clearCountryInfo();
+  }
+  if (data.length < 2) {
+    markupInfo(data);
+    clearCountryList();
+  }
   if (data.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
-  }
-  if (data.length >= 2 && data.length <= 10) {
-    clearCountryInfo();
-    markupList(data);
-  }
-  if (data.length === 1) {
-    clearCountryList();
-    markupInfo(data);
   }
 }
 
