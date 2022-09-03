@@ -13,10 +13,11 @@ import {
 const DEBOUNCE_DELAY = 300;
 const refs = getRefs();
 
+clearCountryList();
+clearCountryInfo();
+
 refs.input.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY));
 function onInputSearch(evt) {
-  clearCountryList();
-  clearCountryInfo();
   const inputValue = evt.target.value.trim();
   if (!inputValue) {
     clearCountryInfo();
