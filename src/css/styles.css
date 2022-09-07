@@ -59,7 +59,6 @@ ul {
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* border: blue 4px dotted; */
   box-shadow: var(--shadow);
   background-color: #fff;
 }

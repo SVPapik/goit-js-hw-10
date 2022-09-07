@@ -13,12 +13,11 @@ import {
 const DEBOUNCE_DELAY = 300;
 const refs = getRefs();
 
-clearCountryList();
-clearCountryInfo();
-
 refs.input.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY));
 function onInputSearch(evt) {
   const inputValue = evt.target.value.trim();
+  clearCountryInfo();
+  clearCountryList();
   if (!inputValue) {
     clearCountryInfo();
     clearCountryList();
@@ -28,13 +27,17 @@ function onInputSearch(evt) {
 }
 
 function onFetchSuccess(data) {
+  clearCountryInfo();
+  clearCountryList();
   if (data.length >= 2 && data.length <= 10) {
     markupList(data);
     clearCountryInfo();
+    return;
   }
   if (data.length < 2) {
     markupInfo(data);
     clearCountryList();
+    return;
   }
   if (data.length > 10) {
     Notify.info('Too many matches found. Please enter a more specific name.');
